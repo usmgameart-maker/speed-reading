@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Помоги Деду Морозу собрать подарки</title>
+  <link rel="stylesheet" href="files/style.css">
+</head>
+<body>
+  <div class="snow" id="snow" aria-hidden="true"></div>
+
+  <!-- ЭКРАН 1: ОБЛОЖКА -->
+  <section id="screen-start" class="screen active">
+    <div class="cover">
+      <div class="cover-text">
+        <div class="badge" id="start-badge"></div>
+        <h1 id="start-title"></h1>
+        <p class="lead">Дети со всей страны прислали Деду Морозу письма. Но в дороге письма заколдовала Вьюга: буквы перепутались, слова слиплись, а какие-то строчки перевернулись!</p>
+        <ul class="how">
+          <li><span class="how-num">1</span><span>Прочитай заколдованное письмо — засекаем время.</span></li>
+          <li><span class="how-num">2</span><span>Найди в кладовой подарок, о котором мечтает ребёнок.</span></li>
+          <li><span class="how-num">3</span><span>Собери мешок из <b id="start-count">15</b> подарков и получи награды.</span></li>
+        </ul>
+        <div class="start-actions">
+          <button class="btn btn-primary hidden" id="btn-continue"></button>
+          <button class="btn btn-primary" id="btn-start">Начать</button>
+        </div>
+        <p class="save-note">Прогресс сохраняется автоматически.</p>
+      </div>
+      <div class="cover-ded"><img src="files/img/ded-happy.png" alt="Дед Мороз"></div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 2: ИГРА -->
+  <section id="screen-game" class="screen">
+    <header class="topbar">
+      <div class="progress" id="progress"></div>
+      <div class="topbar-right">
+        <div class="pill" title="Время чтения письма"><span>⏱</span> <span id="timer">0:00</span></div>
+        <div class="pill" title="Подарков в мешке"><span>🎁</span> <span id="sack-count">0</span>/<span id="sack-total">15</span></div>
+        <button class="pill pill-btn" id="btn-awards" title="Награды"><span>🏆</span> <span id="awards-count">0</span></button>
+        <button class="icon-btn" id="btn-sound" title="Звук">🔊</button>
+      </div>
+    </header>
+
+    <!-- 2а. Пришло письмо -->
+    <div class="stage" id="stage-mail">
+      <div class="mailbox-wrap">
+        <div class="envelope" id="envelope">
+          <div class="env-flap"></div>
+          <div class="env-stamp">❄</div>
+          <div class="env-to">Деду Морозу<br><small>г. Великий Устюг</small></div>
+          <div class="env-from" id="env-from"></div>
+        </div>
+        <div class="mail-text">
+          <div class="mail-num" id="mail-num"></div>
+          <h2 id="mail-title"></h2>
+          <div class="mail-hint" id="mail-hint"></div>
+          <button class="btn btn-primary btn-big" id="btn-open">Открыть письмо</button>
+          <p class="mail-note">Как только откроешь письмо, включится секундомер.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2б. Чтение и кладовая -->
+    <div class="stage hidden" id="stage-letter">
+      <div class="letter-col">
+        <div class="letter" id="letter">
+          <div class="letter-head">
+            <span class="letter-from" id="letter-from"></span>
+            <span class="letter-mech" id="letter-mech"></span>
+          </div>
+          <div class="letter-body"><div class="letter-text" id="letter-text"></div></div>
+          <div class="letter-foot" id="letter-foot">
+            <button class="btn btn-primary" id="btn-read">Я прочитал(а)! →</button>
+          </div>
+        </div>
+        <div class="result hidden" id="result"></div>
+      </div>
+
+      <div class="side">
+        <div class="ded-reading" id="ded-reading">
+          <img src="files/img/ded-reads.png" alt="">
+          <div class="ded-bubble">Помоги мне прочитать письмо! Когда закончишь — нажми «Я прочитал(а)!»</div>
+        </div>
+        <div class="storeroom hidden" id="storeroom">
+          <div class="store-head">
+            <h3 id="store-q"></h3>
+            <span class="store-hint">Выбери подарок на полке</span>
+          </div>
+          <div class="shelves" id="shelves"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 3: ФИНАЛ -->
+  <section id="screen-finish" class="screen">
+    <div class="finish">
+      <div class="finish-ded"><img src="files/img/ded-happy.png" alt=""></div>
+      <div class="finish-main">
+        <div class="finish-head">
+          <div>
+            <div class="badge">Все подарки собраны!</div>
+            <h1>Спасибо, помощник!</h1>
+          </div>
+          <div class="finish-actions">
+            <button class="btn btn-secondary" id="btn-diploma">🏅 Грамота</button>
+            <button class="btn btn-primary" id="btn-restart">Сыграть ещё раз</button>
+          </div>
+        </div>
+        <div class="stats" id="stats"></div>
+        <h3 class="sub">Награды</h3>
+        <div class="awards" id="finish-awards"></div>
+        <h3 class="sub">Подарки и время чтения</h3>
+        <div class="kids" id="kids"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- НАГРАДЫ -->
+  <div class="modal hidden" id="awards-modal">
+    <div class="card">
+      <h2>Награды</h2>
+      <div class="awards" id="awards-list"></div>
+      <div class="card-actions"><button class="btn btn-primary" id="btn-awards-close">Закрыть</button></div>
+    </div>
+  </div>
+
+  <!-- ГРАМОТА -->
+  <div class="modal hidden" id="diploma-modal">
+    <div class="card diploma-card">
+      <div class="diploma" id="diploma">
+        <div class="dip-top">ГРАМОТА</div>
+        <div class="dip-sub">вручается</div>
+        <input class="dip-name" id="dip-name" placeholder="Впиши своё имя" maxlength="40">
+        <div class="dip-text">за помощь Деду Морозу: прочитаны все 15 заколдованных писем и собраны подарки для ребят!</div>
+        <div class="dip-row"><span id="dip-time"></span><span id="dip-awards"></span></div>
+        <img class="dip-ded" src="files/img/ded-happy.png" alt="">
+        <div class="dip-sign">Дед Мороз</div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-secondary" id="btn-print">🖨 Распечатать</button>
+        <button class="btn btn-primary" id="btn-diploma-close">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-box" id="toasts"></div>
+  <img class="flyer hidden" id="flyer" alt="">
+
+  <script src="files/letters.js"></script>
+  <script src="files/mechanics.js"></script>
+  <script src="files/game.js"></script>
+</body>
+</html>
